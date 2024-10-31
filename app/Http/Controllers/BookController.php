@@ -5,6 +5,10 @@ namespace App\Http\Controllers;
 use App\Models\Book;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
+use Illuminate\Support\Str;
+
+use App\Http\Requests\BookRequest;
+
 
 class BookController extends Controller
 {
@@ -31,27 +35,11 @@ class BookController extends Controller
      * - if validation fails, return validation error 
      * - if validation passes, adds a new book to the collection
      */
-    public function store(Request $request)
+    public function store(BookRequest $request)
     {
-        //
-        $validator = Validator::make($request->all(), [
-            'title' => 'required|max:255',
-            'author' => 'required|max:255',
-            'published_year' => 'required|integer|min:1000|max:' .date('Y'),
-            'genre' => 'required|max:255',
-            'description' => 'required',
-        ]);
+        $bookValidated = $request->validated();
 
-        if ($validator->fails()) 
-        {
-            return response()->json([
-                'status' => false,
-                'message' => 'Validation error',
-                'errors' => $validator->errors()
-            ], 422);
-        }
-
-        $book = Book::create($request->all());
+        $book = Book::create($bookValidated);
         return response()->json([
             'status' =>  true,
             'message' => 'Book created successfully',
@@ -82,28 +70,13 @@ class BookController extends Controller
      * - I use findOrFail instead of find so that Laravel will automatically throw an 404 error if the book is not found
      * 
      */
-    public function update(Request $request, $id)
+    public function update(BookRequest $request, $id)
     {
         //
-        $validator = Validator::make($request->all(), [
-            'title' => 'required|max:255',
-            'author' => 'required|max:255',
-            'published_year' => 'required|integer|min:1000|max:' .date('Y'),
-            'genre' => 'required|max:255',
-            'description' => 'required',
-        ]);
-
-        if ($validator->fails()) 
-        {
-            return response()->json([
-                'status' => false,
-                'message' => 'Validation error',
-                'errors' => $validator->errors()
-            ], 422);
-        }
+        $bookValidated = $request->validated();
 
         $book = Book::findOrFail($id);
-        $book->update($request->all());
+        $book->update($bookValidated);
         return response()->json([
             'status' =>  true,
             'message' => 'Book updated successfully',
