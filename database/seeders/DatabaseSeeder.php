@@ -12,6 +12,7 @@ class DatabaseSeeder extends Seeder
 {
     /**
      * Seed the application's database.
+     * calls the BookSeeder class to seed the database with initial data.
      */
     public function run(): void
     {

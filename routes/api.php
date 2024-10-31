@@ -9,4 +9,8 @@ Route::get('/user', function (Request $request) {
     return $request->user();
 })->middleware('auth:sanctum');
 
+/**
+ * used apiResource to create restful endpoints
+ * endpoints are handled by the BookController using default resource controller conventions
+*/
 Route::apiResource('books', BookController::class);

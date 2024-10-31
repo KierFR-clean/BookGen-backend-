@@ -10,6 +10,9 @@ class BookSeeder extends Seeder
 {
     /**
      * Run the database seeds.
+     * seeder that provides initial data for the application.
+     * I focused on curated collection of programming books that I already read.
+     * 
      */
     public function run()
     {
@@ -168,8 +171,13 @@ class BookSeeder extends Seeder
             ],
         ];
 
+        /**
+         * I used firstOrCreate if I somehow run the seed twice making sure I don't duplicate the same books
+         * - I use the title as the primary attribute to check upon if there's duplicate 
+         * - if there's no duplicate, just add the book
+         */
         foreach ($books as $book) {
-            Book::create($book);
+            Book::firstOrCreate(['title' => $book['title']], $book);
         }
     }
 }

@@ -8,6 +8,8 @@ return new class extends Migration
 {
     /**
      * Run the migrations.
+     * Create the book table will all the columns
+     * id as the primary key and automatic timestamps
      */
     public function up(): void
     {

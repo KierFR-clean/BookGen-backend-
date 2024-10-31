@@ -10,6 +10,7 @@ class BookController extends Controller
 {
     /**
      * Display a listing of the resource.
+     * 
      */
     public function index()
     {
@@ -24,6 +25,11 @@ class BookController extends Controller
 
     /**
      * Store a newly created resource in storage.
+     * 
+     * - Adds a new book to book collection
+     * - validator to check if published year are in are from 1000 to current year
+     * - if validation fails, return validation error 
+     * - if validation passes, adds a new book to the collection
      */
     public function store(Request $request)
     {
@@ -56,6 +62,8 @@ class BookController extends Controller
 
     /**
      * Display the specified resource.
+     * - If book doesn't found, I use findOrFail instead of find so that Laravel will 
+     * automatically throw an 404 error if the book is not found
      */
     public function show($id)
     {
@@ -70,6 +78,9 @@ class BookController extends Controller
 
     /**
      * Update the specified resource in storage.
+     * - Same with add I first check if book credentials are all making sense before saving it
+     * - I use findOrFail instead of find so that Laravel will automatically throw an 404 error if the book is not found
+     * 
      */
     public function update(Request $request, $id)
     {
@@ -102,6 +113,9 @@ class BookController extends Controller
 
     /**
      * Remove the specified resource from storage.
+     * 
+     * - It removes the book in the collection completely
+     * -  It finds the book by id and if succesfull, it removes it from the collection
      */
     public function destroy($id)
     {
